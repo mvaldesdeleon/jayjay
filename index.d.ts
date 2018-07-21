@@ -1,5 +1,9 @@
 declare module 'jayjay' {
-    interface Rule {
+    interface JayJayOptions {
+        rules: JayJayRule[]
+    }
+
+    interface JayJayRule {
         name: string,
         condition: (any) => boolean,
         encode: (any) => any,
@@ -11,7 +15,7 @@ declare module 'jayjay' {
         decode: (any) => any
     }
 
-    function jayjay(options: Rule[]): JayJay;
+    function jayjay(options: JayJayOptions): JayJay;
 
     export = jayjay;
 }

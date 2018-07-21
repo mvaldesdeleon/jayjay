@@ -1,6 +1,6 @@
 {
   "name": "jayjay",
-  "version": "1.0.1",
+  "version": "1.0.2",
   "description": "Encodes JavaScript values as JavaScript values",
   "main": "index.js",
   "types": "index.d.ts",

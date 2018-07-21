@@ -1,0 +1,19 @@
+{
+  "name": "jayjay",
+  "version": "1.0.0",
+  "description": "Encodes JavaScript values as JavaScript values",
+  "main": "index.js",
+  "scripts": {
+    "lint": "eslint .",
+    "test": "node test.js"
+  },
+  "dependencies": {},
+  "devDependencies": {
+    "eslint": "^5.2.0",
+    "tape": "^4.9.1"
+  },
+  "repository": "mvaldesdeleon/jayjay",
+  "keywords": ["encode", "decode", "javascript"],
+  "author": "Martin Valdes de Leon <m.valdesdeleon@gmail.com>",
+  "license": "MIT"
+}

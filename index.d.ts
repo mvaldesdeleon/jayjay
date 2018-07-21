@@ -5,14 +5,14 @@ declare module 'jayjay' {
 
     interface JayJayRule {
         name: string,
-        condition: (any) => boolean,
-        encode: (any) => any,
-        decode: (any) => any
+        condition: (input: any) => boolean,
+        encode: (input: any) => any,
+        decode: (input: any) => any
     }
 
     interface JayJay {
-        encode: (any) => any,
-        decode: (any) => any
+        encode: (input: any) => any,
+        decode: (input: any) => any
     }
 
     function jayjay(options: JayJayOptions): JayJay;

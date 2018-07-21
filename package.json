@@ -1,8 +1,9 @@
 {
   "name": "jayjay",
-  "version": "1.0.0",
+  "version": "1.0.1",
   "description": "Encodes JavaScript values as JavaScript values",
   "main": "index.js",
+  "types": "index.d.ts",
   "scripts": {
     "lint": "eslint .",
     "test": "node test.js"

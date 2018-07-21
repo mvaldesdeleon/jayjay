@@ -1,6 +1,6 @@
 const JAYJAY_KEY = '__J__a__Y__j__A__y__';
 
-module.exports = function(options = {}) {
+module.exports = function jayjay(options = {}) {
     const isObject = value => typeof value === 'object';
     const isArray = value => value instanceof Array;
     const objectMap = (object, map) => Object.entries(object).reduce((object, [key, value]) => (object[key] = map(value), object), {});

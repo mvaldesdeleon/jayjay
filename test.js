@@ -19,10 +19,16 @@ const R = {
         condition: value => value instanceof Date,
         encode: value => value.getTime(),
         decode: value => new Date(value)
+    },
+    BUFFER: {
+        name: 'buffer',
+        condition: value => value instanceof Buffer,
+        encode: value => value,
+        decode: value => value
     }
 };
 
-const { encode, decode } = jayjay({rules: [R.NULL, R.UNDEFINED, R.DATE]});
+const { encode, decode } = jayjay({rules: [R.NULL, R.UNDEFINED, R.DATE, R.BUFFER]});
 
 test('null', t => {
     const input = null;
@@ -46,6 +52,15 @@ test('date', t => {
 
     t.equal(output instanceof Date, true, 'output is a date');
     t.equal(output.getTime(), input.getTime(), 'output is same date as input');
+    t.end();
+});
+
+test('buffer', t => {
+    const input = Buffer.from('💩', 'utf8');
+    const output = decode(encode(input));
+
+    t.equal(output instanceof Buffer, true, 'output is a buffer');
+    t.equal(output.compare(input) === 0, true, 'output is same data as input');
     t.end();
 });
 
@@ -94,7 +109,7 @@ test('boolean', t => {
 });
 
 test('array', t => {
-    const input = [null, undefined, new Date()];
+    const input = [null, undefined, new Date(), Buffer.from('💩', 'utf8')];
     const output = decode(encode(input));
 
     t.equal(output instanceof Array, true, 'output is array');
@@ -102,11 +117,13 @@ test('array', t => {
     t.equal(output[1] === undefined, true, 'output preserves undefined');
     t.equal(output[2] instanceof Date, true, 'output preserves date');
     t.equal(output[2].getTime(), input[2].getTime(), 'output preserves date');
+    t.equal(output[3] instanceof Buffer, true, 'output is a buffer');
+    t.equal(output[3].compare(input[3]) === 0, true, 'output is same data as input');
     t.end();
 });
 
 test('object', t => {
-    const input = {null: null, undefined: undefined, date: new Date()};
+    const input = {null: null, undefined: undefined, date: new Date(), buffer: Buffer.from('💩', 'utf8')};
     const output = decode(encode(input));
 
     t.equal(typeof output  === 'object', true, 'output is object');
@@ -114,13 +131,15 @@ test('object', t => {
     t.equal(output.undefined === undefined, true, 'output preserves undefined');
     t.equal(output.date instanceof Date, true, 'output preserves date');
     t.equal(output.date.getTime(), input.date.getTime(), 'output preserves date');
+    t.equal(output.buffer instanceof Buffer, true, 'output is a buffer');
+    t.equal(output.buffer.compare(input.buffer) === 0, true, 'output is same data as input');
     t.end();
 });
 
 test('deep', t => {
     const input = {
         outter: [{
-            inner: [{null: null, undefined: undefined, date: new Date()}]
+            inner: [{null: null, undefined: undefined, date: new Date(), buffer: Buffer.from('💩', 'utf8')}]
         }]
     };
     const output = decode(encode(input));
@@ -130,5 +149,7 @@ test('deep', t => {
     t.equal(output.outter[0].inner[0].undefined === undefined, true, 'output preserves undefined');
     t.equal(output.outter[0].inner[0].date instanceof Date, true, 'output preserves date');
     t.equal(output.outter[0].inner[0].date.getTime(), input.outter[0].inner[0].date.getTime(), 'output preserves date');
+    t.equal(output.outter[0].inner[0].buffer instanceof Buffer, true, 'output is a buffer');
+    t.equal(output.outter[0].inner[0].buffer.compare(input.outter[0].inner[0].buffer) === 0, true, 'output is same data as input');
     t.end();
 });
